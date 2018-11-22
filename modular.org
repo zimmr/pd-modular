@@ -1,0 +1,147 @@
+#+TITLE: Biblioteca Modular Doc
+#+AUTHOR: João Zimmer
+
+* DONE Saída DAC com canais definidos por argumentos
+  CLOSED: [2018-06-25 Seg 19:16]
+* DONE Criar módulo vetor para automação
+  CLOSED: [2018-06-25 Seg 22:58]
+* TODO Revisar biblioteca modular.
+* TODO Escrever documentação.
+
+
+
+
+
+* Bilioteca Modular: Documentação
+** Introdução
+** Objetos
+*** Áudio
+****** Síntese
+******* filterednoise 
+       	Ruído branco com filtro de banda de frequência. Argumentos de criação: $1, nome.
+
+       	| recebe                | descrição                                             |
+       	|-----------------------+-------------------------------------------------------|
+       	| filterednoise-$1-on   | 1 ou 0; Ativa ou desativa o DSP para este módulo      |
+       	| filterednoise-$1-freq | Float; Centro do filtro no espectro de frequência     |
+       	| filterednoise-$1-q    | Float; Abertura do filtro (inversamente proporcional) |
+       	| filterednoise-$1-vol  | Float; Volume do módulo                               |
+       	|-----------------------+-------------------------------------------------------|
+
+********* fmunit
+	  Frequência de modulação. Argumentos de criação: $1, nome. Duas entradas para outras fmunits.
+	  Outlet deve ser conectado com o segundo inlet das abstrações sine, saw, sqr ou tri; 
+
+          | recebe       | descrição                  |
+          |--------------+----------------------------|
+          | fm-$1-freq   | Float; Frequência do sinal |
+          | fm-$1-amount | Float; (..)                |
+          |--------------+----------------------------|
+
+********* adsr
+	  Envelope ADSR. Argumentos de criação: $1, nome. (..)
+
+********* counter
+	  Contador. Emite um valor incremental no tempo estabelecido. Argumentos de criação: $1, nome. 
+
+          | recebe          | descrição                        |
+          |-----------------+----------------------------------|
+          | setbpm          | Float; Define o bpm (global)     |
+          | setbpm-$1       | Float; Define o bpm (local)      |
+          | startcounter    | Bang; Inicia o contador (global) |
+          | startcounter-$1 | Bang; Inicia o contador (local)  |
+          | stopcounter     | Bang; Para o contador (global)   |
+          | stopcounter-$1  | Bang; Para o contador (local)    |
+          |-----------------+----------------------------------|
+	  
+****** Sampling
+********* rsampler 
+	  Sampler com aleatorização do ponto inicial. Argumentos de criação: $1, nome. Definições de
+	  limites das escolhas aleatórias não funcionam muito bem. 
+
+	  | recebe            | descrição                                           |
+	  |-------------------+-----------------------------------------------------|
+	  | rsampler-$1-on    | 1 ou 0; Ativa ou desative o módulo                  |
+	  | rsampler-$1-vol   | 0 a 1; Volume do módulo                             |
+	  | rsampler-$1-speed | 0 a 1; Velocidade de reprodução do arquivo de áudio |
+	  | rsampler-$1-load  | Endereço do áudio                                   |
+	  | rsampler-$1-start | 0 a 1; Ponto de início da reprodução                |
+	  | rsampler-$1-end   | 0 a 1; Ponto de fim da reprodução                   |
+	  | rsampler-$1-bpm   | Tempo da aleatorização do ponto inicial             |
+	  | rsampler-$1-min   | Limite inicial das escolhas aleatórias              |
+	  | rsampler-$1-max   | Limite final das escolhas aleatórias                |
+	  |-------------------+-----------------------------------------------------|
+ 
+****** Efeitos
+********* filter
+Filtro de frequência. 
+****** Saída
+*** Controle
+****** Programação
+********* auto
+	  Vetor[0..99] para automatização de parâmetros de outros objetos. Argumentos de criação: $1,
+	  nome. Valores: from, posição inicial; to, posição final; in, tempo em segundos; *,
+	  multiplicador dos valores do vetor; Caixa de número sem etiqueta, mostra o valor de saída. 
+
+          | recebe        | descrição                       |
+          |---------------+---------------------------------|
+          | auto-$1-start | Bang; Inicia a leitura do vetor |
+          | auto-$1-stop  | Bang; Para a leitura do vetor   |
+          |---------------+---------------------------------|
+	
+********* noteseq
+	  Sequenciador de notas simples. Define a frequência em Hz a ser tocada em cada batida. 0 não
+	  toca. Argumentos de criação: $1, nome. Dois outlets, o primeiro envia uma mensagem com a
+	  nota, e o segundo uma mensagem com a velocidade fixa de 100.
+
+          | recebe         | descrição                                |
+          |                |                                          |
+          |----------------+------------------------------------------|
+          | sqnt-$1-nsteps | Inteiro; Número de divisões da sequência |
+          | notepattern-$1 | Sequência de floats (16 a 8000)          |
+          |----------------+------------------------------------------|
+
+********* noteseq2
+	  Sequenciador de notas com definição de velocidade para cada batida. Argumentos de criação: 
+	  $1, nome.Um outlet envia uma mensagem com a nota e a velocidade.
+
+          | recebe         | descrição                                |
+          |----------------+------------------------------------------|
+          | sqnt-$1-nsteps | Inteiro; Número de divisões da sequência |
+          | notepattern-$1 | Sequência de floats (16 a 8000)          |
+          | velpattern-$1  | Sequência de floats (0 a 120)            |
+          |----------------+------------------------------------------|
+	  
+********* readtxt
+	  Carrega e lê um arquivo .txt com uma lista de mensagens. Argumentos de criação: $1, nome.
+	  
+	  | recebe          | descrição           |
+	  |-----------------+---------------------|
+	  | path-to-txt-$1  | Endereço do arquivo |
+	  | read_txt-msg-$1 | read; bang; clear   |
+	  |-----------------+---------------------|
+  
+********* seq
+	  Sequenciador simples. Argumentos de criação: $1, nome. Recebe valores de um contador e os
+	  divide pelo número de steps. Envia um bang pelo outlet.
+
+          | recebe       | descrição                                |
+          |--------------+------------------------------------------|
+          | nsteps-$1_in | Inteiro; número de divisões da sequência |
+          | pattern-$1   | Sequência de booleans (1 ou 0);          |
+          |--------------+------------------------------------------|
+
+********* seq2
+	  Sequenciador com definição de velocidade e de repetições para cada batida. Argumentos de
+	  criação: $1, nome; $2, nome do counter; Dois outlets, o primeiro envia um bang e o segundo
+	  uma mensagem com a velocidade.
+ 
+          | recebe       | descrição                                |
+          |--------------+------------------------------------------|
+          | nsteps-$1_in | Inteiro; Número de divisões da sequência |
+          | pattern-$1   | Sequência de booleans (1 ou 0)           |
+          | v-pattern-$1 | Sequência de floats (0 a 120)            |
+          | r-pattern-$1 | Sequência de floats (0 a 12)             |
+          |--------------+------------------------------------------|
+
+****** Utilidades
