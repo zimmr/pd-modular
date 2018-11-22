@@ -1,0 +1,34 @@
+#N canvas 2 78 520 300 10;
+#X obj 229 143 noise~;
+#X obj 229 195 *~;
+#X obj 229 165 bp~, f 4;
+#X obj 229 275 outlet~;
+#X obj 114 180 hsl 100 15 0 8000 0 0 empty empty f -10 6 0 10 -262144
+-1 -1 0 1;
+#X obj 114 201 hsl 100 15 0 100 0 0 empty empty q -10 6 0 10 -262144
+-1 -1 0 1;
+#X obj 229 243 *~;
+#X obj 202 122 vsl 15 50 0 1 0 0 empty empty vol -20 44 0 10 -262144
+-1 -1 0 1;
+#X obj 113 120 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 58 240 switch~;
+#X obj 399 31 inlet~;
+#X obj 36 9 r filterednoise-\$1-on;
+#X obj 31 31 r filterednoise-\$1-freq;
+#X obj 20 58 r filterednoise-\$1-q;
+#X obj 202 44 r filterednoise-\$1-vol;
+#X connect 0 0 2 0;
+#X connect 1 0 6 0;
+#X connect 2 0 1 0;
+#X connect 4 0 2 1;
+#X connect 5 0 2 2;
+#X connect 6 0 3 0;
+#X connect 7 0 1 1;
+#X connect 8 0 9 0;
+#X connect 10 0 6 1;
+#X connect 11 0 8 0;
+#X connect 12 0 4 0;
+#X connect 13 0 5 0;
+#X connect 14 0 7 0;
+#X coords 0 -1 1 1 120 120 1 100 100;

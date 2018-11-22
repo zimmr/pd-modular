@@ -1,0 +1,22 @@
+#N canvas 852 504 620 380 10;
+#X obj 202 200 *~;
+#X obj 202 269 dac~;
+#X obj 106 27 loadbang;
+#X msg 106 49 0.5;
+#X obj 203 27 inlet~;
+#X obj 140 121 vsl 15 50 0 1 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 2450 1;
+#X obj 105 119 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 74 194 switch~;
+#X msg 70 51 1;
+#X connect 0 0 1 0;
+#X connect 0 0 1 1;
+#X connect 2 0 3 0;
+#X connect 2 0 8 0;
+#X connect 3 0 5 0;
+#X connect 4 0 0 0;
+#X connect 5 0 0 1;
+#X connect 6 0 7 0;
+#X connect 8 0 6 0;
+#X coords 0 -1 1 1 60 80 1 100 100;

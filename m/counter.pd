@@ -1,0 +1,44 @@
+#N canvas 243 246 570 356 10;
+#X obj 299 158 float;
+#X obj 364 157 + 1;
+#X msg 379 125 -1;
+#X obj 374 28 expr 15000 / $f1;
+#X obj 299 100 metro;
+#X obj 299 197 outlet;
+#X obj 132 162 nbx 4 14 0 480 0 0 empty empty bpm -21 8 0 10 -262144
+-1 -1 120 256;
+#X obj 162 122 bng 15 250 50 0 empty empty start -32 7 0 10 -262144
+-1 -1;
+#X obj 162 141 bng 15 250 50 0 empty empty stop -27 7 0 10 -262144
+-1 -1;
+#X msg 316 17 stop;
+#X obj 141 10 loadbang;
+#X msg 141 32 120;
+#X obj 212 9 r setbpm-\$1;
+#X obj 8 14 r startcounter-\$1;
+#X obj 17 57 r stopcounter-\$1;
+#X obj 17 77 r stopcounter;
+#X obj 8 35 r startcounter;
+#X obj 212 28 r setbpm;
+#X obj 132 193 s get-bpm-\$1;
+#X connect 0 0 1 0;
+#X connect 0 0 5 0;
+#X connect 1 0 0 1;
+#X connect 2 0 0 0;
+#X connect 3 0 4 1;
+#X connect 4 0 0 0;
+#X connect 6 0 3 0;
+#X connect 6 0 18 0;
+#X connect 7 0 4 0;
+#X connect 8 0 9 0;
+#X connect 8 0 2 0;
+#X connect 9 0 4 0;
+#X connect 10 0 11 0;
+#X connect 11 0 6 0;
+#X connect 12 0 6 0;
+#X connect 13 0 7 0;
+#X connect 14 0 8 0;
+#X connect 15 0 8 0;
+#X connect 16 0 7 0;
+#X connect 17 0 6 0;
+#X coords 0 -1 1 1 80 80 1 100 100;

@@ -1,0 +1,30 @@
+#N canvas 820 468 450 371 10;
+#X obj 258 160 *~;
+#X obj 108 140 hsl 100 15 0 8000 0 0 empty fm-\$1-f frequency -2 -8
+0 10 -262144 -1 -1 0 1;
+#X obj 108 200 hsl 100 15 0 8000 0 0 empty fm-\$1-a amount -2 -8 0
+10 -262144 -1 -1 0 1;
+#X obj 196 114 tgl 15 0 empty fm-\$1-on empty 17 7 0 10 -262144 -1
+-1 0 1;
+#X obj 197 249 switch~;
+#X obj 259 202 outlet~;
+#X obj 259 74 noise~;
+#X obj 259 120 bp~;
+#X obj 108 169 hsl 100 15 0 2000 0 0 empty fm-\$1-f q -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 196 13 r noisefm-\$1-on;
+#X obj 56 53 r noisefm-\$1-q;
+#X obj 30 75 r noisefm-\$1-amount;
+#X obj 67 30 r noisefm-\$1-freq;
+#X connect 0 0 5 0;
+#X connect 1 0 7 1;
+#X connect 2 0 0 1;
+#X connect 3 0 4 0;
+#X connect 6 0 7 0;
+#X connect 7 0 0 0;
+#X connect 8 0 7 2;
+#X connect 9 0 3 0;
+#X connect 10 0 8 0;
+#X connect 11 0 2 0;
+#X connect 12 0 1 0;
+#X coords 0 -1 1 1 120 120 1 100 100;
